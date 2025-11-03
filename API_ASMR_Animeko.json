@@ -1,61 +1,72 @@
 {
-    exportedMediaSourceDataList: {
-      mediaSources: [
-        {
-          factoryId: "web-selector",
-          version: 2,
-          arguments: {
-            name: "ASMR.ONE API",
-            description: "ASMR 音声 API 接口源",
-            iconUrl: "https://api.asmr.one/favicon.ico",
-            searchConfig: {
-              // 搜索接口
-              searchUrl: "https://api.asmr.one/api/search/{keyword}?order=release&sort=desc&page=1&subtitle=1",
-              searchUseOnlyFirstWord: true,
-              searchRemoveSpecial: true,
-              searchUseSubjectNamesCount: 1,
-              rawBaseUrl: "https://api.asmr.one",
-              requestInterval: 2000,
-              subjectFormatId: "json",
-              selectorSubjectFormatJsonPathIndexed: {
-                // 假设返回 JSON 的结构含有作品名和链接键值
-                selectNames: "$.data[*].title",
-                selectLinks: "$.data[*].link",
-                preferShorterName: true
-              },
-              channelFormatId: "index-grouped",
-    
-              // 不需要 HTML 选择器，因为它是 JSON API
-              selectorChannelFormatFlattened: {
-                selectChannelNames: "$.data[*].tracks[*].name",
-                matchChannelName: "^(?<ch>.+)$",
-                selectEpisodeLists: "$.data[*].tracks[*]",
-                selectEpisodesFromList: "$.data[*].tracks[*].episodes[*].title",
-                selectEpisodeLinksFromList: "$.data[*].tracks[*].episodes[*].url",
-                matchEpisodeSortFromName: "(?<ep>\\d+)"
-              },
-    
-              defaultResolution: "FLAC",
-              defaultSubtitleLanguage: "JP",
-              onlySupportsPlayers: [],
-              filterByEpisodeSort: true,
-              filterBySubjectName: true,
-              selectMedia: {
-                distinguishSubjectName: true,
-                distinguishChannelName: true
-              },
-              matchVideo: {
-                enableNestedUrl: false,
-                matchVideoUrl: "(^http(s)?://.*\\.(mp3|m4a|flac|wav).*)",
-                addHeadersToVideo: {
-                  referer: "https://api.asmr.one",
-                  userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-                }
-              }
+  "exportedMediaSourceDataList": {
+    "mediaSources": [
+      {
+        "factoryId": "web-selector",
+        "version": 2,
+        "arguments": {
+          "name": "Kikoeru",
+          "description": "",
+          "iconUrl": "https://i.ibb.co/fd4WKTXF/689beb5262b8e.jpg",
+          "searchConfig": {
+            "searchUrl": "https://www.asmr.one/works?keyword=test{keyword}",
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
+            "rawBaseUrl": "",
+            "requestInterval": 3000,
+            "subjectFormatId": "indexed",
+            "selectorSubjectFormatA": {
+            "selectLists": ".ellipsis-2-lines > a",
+            "preferShorterName": true
+          },
+          "selectorSubjectFormatIndexed": {
+              "selectNames": ".search-box .thumb-content > .thumb-txt",
+              "selectLinks": ".search-box .thumb-menu > a",
+              "preferShorterName": true
             },
-            tier: 0
-          }
+            "selectorSubjectFormatJsonPathIndexed": {
+              "selectLinks": "$[*]['url', 'link']",
+              "selectNames": "$[*]['title','name']",
+              "preferShorterName": true
+            },
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": "",
+              "matchChannelName": "",
+              "selectEpisodeLists": "",
+              "selectEpisodesFromList": "",
+              "selectEpisodeLinksFromList": "",
+              "matchEpisodeSortFromName": ""
+            },
+            "selectorChannelFormatNoChannel": {
+            "selectEpisodes": "div.q-list.q-list--separator div.q-item div.q-item__section div.q-item__label",
+            "selectEpisodeLinks": "audio source",
+            "matchEpisodeSortFromName": "\\.(mp3|m4a|flac|wav|aac|ogg)$"
+            },
+            "defaultResolution": "1080P",
+            "defaultSubtitleLanguage": "CHS",
+            "onlySupportsPlayers": [],
+            "filterByEpisodeSort": true,
+            "filterBySubjectName": true,
+            "selectMedia": {
+              "distinguishSubjectName": true,
+              "distinguishChannelName": false
+            },
+            "matchVideo": {
+              "enableNestedUrl": true,
+              "matchNestedUrl": "$^",
+              "matchVideoUrl": "(https?:\\/\\/[^\\s'\"]+\\.(mp3|m4a|flac|wav|aac|ogg))",
+              "cookies": "",
+              "addHeadersToVideo": {
+              "referer": "https://www.asmr.one/",
+              "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+            }
+            }
+          },
+          "tier": 0
         }
-      ]
-    }
+      }
+    ]
+  }
 }
